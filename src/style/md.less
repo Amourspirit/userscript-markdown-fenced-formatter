@@ -35,7 +35,16 @@ html[data-pinboard-style="dark"] {
     --md-code-bg:rgb((255 - red(@md-code-bg)),(255 - green(@md-code-bg)),(255 - blue(@md-code-bg)));
     --md-quote-bg:rgb((255 - red(@md-quote-bg)),(255 - green(@md-quote-bg)),(255 - blue(@md-quote-bg)));
     --md-link:rgb((255 - red(@md-link)),(255 - green(@md-link)),(255 - blue(@md-link)));
-        --md-link-visited:rgb((255 - red(@md-link-visited)),(255 - green(@md-link-visited)),(255 - blue(@md-link-visited)));
+    --md-link-visited:rgb((255 - red(@md-link-visited)),(255 - green(@md-link-visited)),(255 - blue(@md-link-visited)));
+}
+
+div.md-block {
+    display: grid;
+    grid-auto-flow: row;
+    justify-content: start;
+    align-items: stretch;
+    justify-items: start;
+    overflow-y: auto;
 }
 
 html[data-pinboard-style="dark"],
@@ -47,8 +56,7 @@ html[data-pinboard-style="lite"] {
         border-radius: 6px;
         padding: 12px 14px;
         line-height: 1.55;
-        font-size: 14px;
-        overflow-wrap: anywhere;
+        font-size: 12px;
     }
 
     div.md-block > *:first-child {

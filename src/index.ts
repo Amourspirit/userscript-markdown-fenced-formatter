@@ -1,5 +1,5 @@
 import "./style/site.less";
-import "./style/main.less";
+import "./style/md.less";
 
 import { formatMarkdown } from "./md_lib";
 import { loadConfig, registerConfigMenu } from "./script_config";
