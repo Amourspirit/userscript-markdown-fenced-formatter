@@ -2,6 +2,7 @@
 @md-border: #d6d2bf;
 @md-text: #1f1f1f;
 @md-muted: #555;
+@md-code-color: #22a;
 @md-code-bg: #f1efdf;
 @md-quote-bg: #f5f3e8;
 @md-link: #0645ad;
@@ -12,6 +13,20 @@
 @md-h4-font-size: @md-h1-font-size * 0.6;
 @md-h5-font-size: @md-h1-font-size * 0.5;
 @md-h6-font-size: @md-h1-font-size * 0.45;
+
+@md-dark-bg: #171b24;
+@md-dark-border: #3f4758;
+@md-dark-text: #e7ecf5;
+@md-dark-muted: #bcc7db;
+@md-dark-code-bg: #222937;
+@md-dark-code-color: rgb(
+  (255 - red(@md-code-color)),
+  (255 - green(@md-code-color)),
+  (255 - blue(@md-code-color))
+);
+@md-dark-quote-bg: #1e2431;
+@md-dark-link: #8fc5ff;
+@md-dark-link-visited: #c7a7ff;
 
 html[data-pinboard-style="lite"] {
     div.md-block {
@@ -123,6 +138,7 @@ html[data-pinboard-style="lite"] {
             ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
             monospace;
         font-size: 0.92em;
+        color: @md-code-color;
         background-color: @md-code-bg;
         border: 1px solid @md-border;
         border-radius: 4px;
@@ -163,6 +179,165 @@ html[data-pinboard-style="lite"] {
 
     div.md-block thead th {
         background-color: @md-code-bg;
+    }
+
+    div.md-block img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+html[data-pinboard-style="dark"] {
+    div.md-block {
+        color: @md-dark-text;
+        background-color: @md-dark-bg;
+        border: 1px solid @md-dark-border;
+        border-radius: 6px;
+        padding: 12px 14px;
+        line-height: 1.55;
+        font-size: 14px;
+        overflow-wrap: anywhere;
+    }
+
+    div.md-block > *:first-child {
+        margin-top: 0;
+    }
+
+    div.md-block > *:last-child {
+        margin-bottom: 0;
+    }
+
+    div.md-block h1,
+    div.md-block h2,
+    div.md-block h3,
+    div.md-block h4,
+    div.md-block h5,
+    div.md-block h6 {
+        margin: 1em 0 0.45em;
+        line-height: 1.25;
+        font-weight: 700;
+    }
+
+    div.md-block h1 {
+        font-size: @md-h1-font-size;
+        border-bottom: 1px solid @md-dark-border;
+        padding-bottom: 0.2em;
+    }
+
+    div.md-block h2 {
+        font-size: @md-h2-font-size;
+        border-bottom: 1px solid @md-dark-border;
+        padding-bottom: 0.15em;
+    }
+
+    div.md-block h3 {
+        font-size: @md-h3-font-size;
+    }
+
+    div.md-block h4 {
+        font-size: @md-h4-font-size;
+    }
+
+    div.md-block h5 {
+        font-size: @md-h5-font-size;
+    }
+
+    div.md-block h6 {
+        font-size: @md-h6-font-size;
+    }
+
+    div.md-block p {
+        margin: 0.75em 0;
+    }
+
+    div.md-block a {
+        color: @md-dark-link;
+        text-decoration: underline;
+    }
+
+    div.md-block a:visited {
+        color: @md-dark-link-visited;
+    }
+
+    div.md-block strong {
+        font-weight: 700;
+    }
+
+    div.md-block em {
+        font-style: italic;
+    }
+
+    div.md-block ul,
+    div.md-block ol {
+        margin: 0.75em 0;
+        padding-left: 1.6em;
+        line-height: 1.2;
+    }
+
+    div.md-block li {
+        margin: 0.22em 0;
+    }
+
+    div.md-block blockquote {
+        margin: 0.9em 0;
+        padding: 0.55em 0.9em;
+        border-left: 4px solid @md-dark-border;
+        background-color: @md-dark-quote-bg;
+        color: @md-dark-muted !important;
+    }
+
+    div.md-block hr {
+        border: 0;
+        border-top: 1px solid @md-dark-border;
+        margin: 1em 0;
+    }
+
+    div.md-block code {
+        font-family:
+            ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono",
+            monospace;
+        font-size: 0.92em;
+        color: @md-dark-code-color;
+        background-color: @md-dark-code-bg;
+        border: 1px solid @md-dark-border;
+        border-radius: 4px;
+        padding: 0.08em 0.32em;
+    }
+
+    div.md-block pre {
+        margin: 0.9em 0;
+        padding: 0.75em 0.85em;
+        overflow-x: auto;
+        background-color: @md-dark-code-bg;
+        border: 1px solid @md-dark-border;
+        border-radius: 4px;
+    }
+
+    div.md-block pre code {
+        background: transparent;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        display: block;
+        line-height: 1.45;
+    }
+
+    div.md-block table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.95em 0;
+    }
+
+    div.md-block th,
+    div.md-block td {
+        border: 1px solid @md-dark-border;
+        padding: 0.42em 0.58em;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    div.md-block thead th {
+        background-color: @md-dark-code-bg;
     }
 
     div.md-block img {

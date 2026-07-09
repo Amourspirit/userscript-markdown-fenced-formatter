@@ -1,7 +1,7 @@
 {
   "name": "userscript-markdown-fenced-formatter",
   "description": "Build your UserScript with webpack",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Amourspirit",
     "email": "fencedmd@pm.amourspirit.net"
