@@ -11,6 +11,7 @@ export type FenceMode = "md-only" | "any-fence";
 export type UserConfig = {
   version: 1;
   enabled: boolean;
+  useMainStyles: boolean;
   selector: string;
   wrapperClass: string;
   fenceMode: FenceMode;
@@ -26,6 +27,7 @@ const CONFIG_KEY = "fenced_md_config";
 const DEFAULT_CONFIG: UserConfig = {
   version: 1,
   enabled: true,
+  useMainStyles: true,
   selector: ".bookmark > .display > .description",
   wrapperClass: "md-block",
   fenceMode: "md-only",
@@ -78,6 +80,15 @@ function registerConfigMenu(): void {
       saveConfig({ selector: value.trim() });
       alert("Selector saved. Reload page to apply.");
     }
+  });
+
+  gmRegisterMenuCommand("Toggle main styles", () => {
+    const cfg = loadConfig();
+    const nextValue = !cfg.useMainStyles;
+    saveConfig({ useMainStyles: nextValue });
+    alert(
+      `Main styles are now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
+    );
   });
 
   gmRegisterMenuCommand("Set wrapper class", () => {

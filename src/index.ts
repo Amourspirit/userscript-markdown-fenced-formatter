@@ -13,6 +13,11 @@ async function main() {
     return;
   }
 
+  document.documentElement.setAttribute(
+    "data-fenced-md-style",
+    cfg.useMainStyles ? "on" : "off",
+  );
+
   const stats = formatMarkdown(cfg);
   if (cfg.debug) {
     console.log(
