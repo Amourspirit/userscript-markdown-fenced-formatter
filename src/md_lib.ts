@@ -21,9 +21,7 @@ function decodeHtmlEntities(input: string): string {
 }
 
 function normalizeInput(inputHtml: string, cfg: UserConfig): string {
-  const withLineBreaks = cfg.convertBrToNewline
-    ? normalizeDescriptionHtml(inputHtml)
-    : inputHtml;
+  const withLineBreaks = normalizeDescriptionHtml(inputHtml);
 
   const decoded = decodeHtmlEntities(withLineBreaks).replace(/\r\n?/g, "\n");
   return cfg.trimInput ? decoded.trim() : decoded;

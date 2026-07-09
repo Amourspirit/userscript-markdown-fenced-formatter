@@ -15,7 +15,6 @@ export type UserConfig = {
   wrapperClass: string;
   fenceMode: FenceMode;
   allowedFenceStyles: FenceStyle[];
-  convertBrToNewline: boolean;
   trimInput: boolean;
   sanitizeHtml: boolean;
   skipIfAlreadyWrapped: boolean;
@@ -31,7 +30,6 @@ const DEFAULT_CONFIG: UserConfig = {
   wrapperClass: "md-block",
   fenceMode: "md-only",
   allowedFenceStyles: ["backtick", "tilde"],
-  convertBrToNewline: true,
   trimInput: true,
   sanitizeHtml: true,
   skipIfAlreadyWrapped: true,
@@ -114,15 +112,6 @@ function registerConfigMenu(): void {
     saveConfig({ skipIfAlreadyWrapped: nextValue });
     alert(
       `Skip already wrapped is now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
-    );
-  });
-
-  gmRegisterMenuCommand("Toggle BR-to-newline conversion", () => {
-    const cfg = loadConfig();
-    const nextValue = !cfg.convertBrToNewline;
-    saveConfig({ convertBrToNewline: nextValue });
-    alert(
-      `BR-to-newline conversion is now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
     );
   });
 
