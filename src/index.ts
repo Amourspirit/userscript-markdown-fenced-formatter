@@ -1,3 +1,4 @@
+import "./style/site.less";
 import "./style/main.less";
 
 import { formatMarkdown } from "./md_lib";
@@ -14,8 +15,8 @@ async function main() {
   }
 
   document.documentElement.setAttribute(
-    "data-fenced-md-style",
-    cfg.useMainStyles ? "on" : "off",
+    "data-pinboard-style",
+    cfg.useMainStyles ? "dark" : "lite",
   );
 
   const stats = formatMarkdown(cfg);
