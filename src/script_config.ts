@@ -7,11 +7,12 @@ import {
 
 export type FenceStyle = "backtick" | "tilde";
 export type FenceMode = "md-only" | "any-fence";
+export type StyleMode = "dark" | "lite" | "";
 
 export type UserConfig = {
   version: 1;
   enabled: boolean;
-  useMainStyles: boolean;
+  useMainStyles: StyleMode;
   selector: string;
   wrapperClass: string;
   fenceMode: FenceMode;
@@ -27,7 +28,7 @@ const CONFIG_KEY = "fenced_md_config";
 const DEFAULT_CONFIG: UserConfig = {
   version: 1,
   enabled: true,
-  useMainStyles: true,
+  useMainStyles: "lite",
   selector: ".bookmark > .display > .description",
   wrapperClass: "md-block",
   fenceMode: "md-only",
@@ -40,6 +41,17 @@ const DEFAULT_CONFIG: UserConfig = {
 
 function normalizeConfig(raw: Partial<UserConfig> | undefined): UserConfig {
   const candidate = raw ?? {};
+  let normalizedStyleMode: StyleMode = DEFAULT_CONFIG.useMainStyles;
+  if (
+    candidate.useMainStyles === "dark" ||
+    candidate.useMainStyles === "lite" ||
+    candidate.useMainStyles === ""
+  ) {
+    normalizedStyleMode = candidate.useMainStyles;
+  } else if (typeof candidate.useMainStyles === "boolean") {
+    // Backward compatibility with previous boolean config.
+    normalizedStyleMode = candidate.useMainStyles ? "lite" : "";
+  }
   const allowedFenceStyles =
     candidate.allowedFenceStyles && candidate.allowedFenceStyles.length > 0
       ? candidate.allowedFenceStyles
@@ -49,6 +61,7 @@ function normalizeConfig(raw: Partial<UserConfig> | undefined): UserConfig {
     ...DEFAULT_CONFIG,
     ...candidate,
     version: 1,
+    useMainStyles: normalizedStyleMode,
     selector: candidate.selector?.trim() || DEFAULT_CONFIG.selector,
     wrapperClass: candidate.wrapperClass?.trim() || DEFAULT_CONFIG.wrapperClass,
     allowedFenceStyles,
@@ -82,13 +95,43 @@ function registerConfigMenu(): void {
     }
   });
 
-  gmRegisterMenuCommand("Toggle main styles", () => {
+  gmRegisterMenuCommand("Cycle style mode (dark/lite/off)", () => {
     const cfg = loadConfig();
-    const nextValue = !cfg.useMainStyles;
+    const nextValue: StyleMode =
+      cfg.useMainStyles === "dark"
+        ? "lite"
+        : cfg.useMainStyles === "lite"
+          ? ""
+          : "dark";
     saveConfig({ useMainStyles: nextValue });
-    alert(
-      `Main styles are now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
+    alert(`Style mode is now '${nextValue || "off"}'. Reload page to apply.`);
+  });
+
+  gmRegisterMenuCommand("Set style mode", () => {
+    const cfg = loadConfig();
+    const value = prompt(
+      "Style mode (dark, lite, off):",
+      cfg.useMainStyles || "off",
     );
+    if (value === null) {
+      return;
+    }
+
+    const normalized = value.trim().toLowerCase();
+    let nextValue: StyleMode;
+    if (normalized === "dark") {
+      nextValue = "dark";
+    } else if (normalized === "lite") {
+      nextValue = "lite";
+    } else if (normalized === "off" || normalized === "") {
+      nextValue = "";
+    } else {
+      alert("Invalid style mode. Use: dark, lite, or off.");
+      return;
+    }
+
+    saveConfig({ useMainStyles: nextValue });
+    alert(`Style mode is now '${nextValue || "off"}'. Reload page to apply.`);
   });
 
   gmRegisterMenuCommand("Set wrapper class", () => {

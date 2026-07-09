@@ -14,10 +14,14 @@ async function main() {
     return;
   }
 
-  document.documentElement.setAttribute(
-    "data-pinboard-style",
-    cfg.useMainStyles ? "dark" : "lite",
-  );
+  if (cfg.useMainStyles) {
+    document.documentElement.setAttribute(
+      "data-pinboard-style",
+      cfg.useMainStyles,
+    );
+  } else {
+    document.documentElement.removeAttribute("data-pinboard-style");
+  }
 
   const stats = formatMarkdown(cfg);
   if (cfg.debug) {
