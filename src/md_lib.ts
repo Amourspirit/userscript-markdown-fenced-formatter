@@ -1,5 +1,6 @@
 import DOMPurify from "dompurify";
 import { marked } from "marked";
+import type { UserConfig } from "./script_config";
 
 export interface FormatMarkdownStats {
   processed: number;
@@ -8,40 +9,67 @@ export interface FormatMarkdownStats {
 }
 
 function normalizeDescriptionHtml(inputHtml: string): string {
-  const withLineBreaks = inputHtml
+  return inputHtml
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<\/p>\s*<p>/gi, "\n\n");
-
-  const tmp = document.createElement("textarea");
-  tmp.innerHTML = withLineBreaks;
-  return tmp.value.replace(/\r\n?/g, "\n").trim();
 }
 
-function extractFencedMarkdown(input: string): string | null {
-  const normalized = input.trim();
+function decodeHtmlEntities(input: string): string {
+  const tmp = document.createElement("textarea");
+  tmp.innerHTML = input;
+  return tmp.value;
+}
 
-  const tick = /^```md\s*\n([\s\S]*?)\n```\s*$/i.exec(normalized);
-  if (tick) {
-    return tick[1].trim();
+function normalizeInput(inputHtml: string, cfg: UserConfig): string {
+  const withLineBreaks = cfg.convertBrToNewline
+    ? normalizeDescriptionHtml(inputHtml)
+    : inputHtml;
+
+  const decoded = decodeHtmlEntities(withLineBreaks).replace(/\r\n?/g, "\n");
+  return cfg.trimInput ? decoded.trim() : decoded;
+}
+
+function getFenceMatch(
+  input: string,
+  style: "backtick" | "tilde",
+  mode: "md-only" | "any-fence",
+): RegExpExecArray | null {
+  if (style === "backtick") {
+    const regex =
+      mode === "md-only"
+        ? /^```md\s*\n([\s\S]*?)\n```\s*$/i
+        : /^```(?:[a-zA-Z0-9_-]+)?\s*\n([\s\S]*?)\n```\s*$/;
+    return regex.exec(input);
   }
 
-  const tilde = /^~~~md\s*\n([\s\S]*?)\n~~~\s*$/i.exec(normalized);
-  if (tilde) {
-    return tilde[1].trim();
+  const regex =
+    mode === "md-only"
+      ? /^~~~md\s*\n([\s\S]*?)\n~~~\s*$/i
+      : /^~~~(?:[a-zA-Z0-9_-]+)?\s*\n([\s\S]*?)\n~~~\s*$/;
+  return regex.exec(input);
+}
+
+function extractFencedMarkdown(input: string, cfg: UserConfig): string | null {
+  for (const style of cfg.allowedFenceStyles) {
+    const match = getFenceMatch(input, style, cfg.fenceMode);
+    if (match) {
+      return cfg.trimInput ? match[1].trim() : match[1];
+    }
   }
 
   return null;
 }
 
-function mdToSafeHtml(markdown: string): string {
+function mdToHtml(markdown: string, cfg: UserConfig): string {
   const rendered = marked.parse(markdown, { async: false });
+  if (!cfg.sanitizeHtml) {
+    return rendered;
+  }
   return DOMPurify.sanitize(rendered);
 }
 
-export function formatMarkdown(): FormatMarkdownStats {
-  const descriptions = document.querySelectorAll<HTMLDivElement>(
-    ".bookmark > .display > .description",
-  );
+export function formatMarkdown(cfg: UserConfig): FormatMarkdownStats {
+  const descriptions = document.querySelectorAll<HTMLDivElement>(cfg.selector);
 
   const stats: FormatMarkdownStats = {
     processed: descriptions.length,
@@ -50,16 +78,24 @@ export function formatMarkdown(): FormatMarkdownStats {
   };
 
   descriptions.forEach((el) => {
-    const normalized = normalizeDescriptionHtml(el.innerHTML);
-    const markdown = extractFencedMarkdown(normalized);
+    if (
+      cfg.skipIfAlreadyWrapped &&
+      el.querySelector(`:scope > div.${cfg.wrapperClass}`)
+    ) {
+      stats.skipped += 1;
+      return;
+    }
+
+    const normalized = normalizeInput(el.innerHTML, cfg);
+    const markdown = extractFencedMarkdown(normalized, cfg);
 
     if (!markdown) {
       stats.skipped += 1;
       return;
     }
 
-    const safeHtml = mdToSafeHtml(markdown);
-    el.innerHTML = `<div class="md-block">${safeHtml}</div>`;
+    const safeHtml = mdToHtml(markdown, cfg);
+    el.innerHTML = `<div class="${cfg.wrapperClass}">${safeHtml}</div>`;
     stats.converted += 1;
   });
 

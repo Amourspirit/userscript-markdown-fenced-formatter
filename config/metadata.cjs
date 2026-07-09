@@ -11,7 +11,7 @@ module.exports = {
     cn: "Markdown 代码块格式化",
     en: "Fenced Markdown Formatter",
   },
-  namespace: "https://trim21.me/",
+  namespace: "com.github.amourspirit.userscripts",
   version: version,
   author: author,
   source: repository.url,
@@ -20,7 +20,17 @@ module.exports = {
   require: [
     `https://cdn.jsdelivr.net/npm/jquery@${dependencies.jquery}/dist/jquery.min.js`,
   ],
-  grant: ["GM.xmlHttpRequest"],
+  grant: [
+    "GM.xmlHttpRequest",
+    "GM_addStyle",
+    "GM_getResourceText",
+    "GM_registerMenuCommand",
+    "GM_unregisterMenuCommand",
+    "GM_setValue",
+    "GM_getValue",
+    "GM_listValues",
+    "GM_deleteValue",
+  ],
   connect: ["httpbin.org"],
   "run-at": "document-end",
 };

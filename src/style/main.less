@@ -6,6 +6,12 @@
 @md-quote-bg: #f5f3e8;
 @md-link: #0645ad;
 @md-link-visited: #5a3696;
+@md-h1-font-size: 1.5em;
+@md-h2-font-size: @md-h1-font-size * 0.82;
+@md-h3-font-size: @md-h1-font-size * 0.7;
+@md-h4-font-size: @md-h1-font-size * 0.6;
+@md-h5-font-size: @md-h1-font-size * 0.5;
+@md-h6-font-size: @md-h1-font-size * 0.45;
 
 div.md-block {
     color: @md-text;
@@ -38,19 +44,31 @@ div.md-block h6 {
 }
 
 div.md-block h1 {
-    font-size: 1.65em;
+    font-size: @md-h1-font-size;
     border-bottom: 1px solid @md-border;
     padding-bottom: 0.2em;
 }
 
 div.md-block h2 {
-    font-size: 1.35em;
+    font-size: @md-h2-font-size;
     border-bottom: 1px solid @md-border;
     padding-bottom: 0.15em;
 }
 
 div.md-block h3 {
-    font-size: 1.15em;
+    font-size: @md-h3-font-size;
+}
+
+div.md-block h4 {
+    font-size: @md-h4-font-size;
+}
+
+div.md-block h5 {
+    font-size: @md-h5-font-size;
+}
+
+div.md-block h6 {
+    font-size: @md-h6-font-size;
 }
 
 div.md-block p {
@@ -78,6 +96,7 @@ div.md-block ul,
 div.md-block ol {
     margin: 0.75em 0;
     padding-left: 1.6em;
+    line-height: 1.2;
 }
 
 div.md-block li {
@@ -89,7 +108,7 @@ div.md-block blockquote {
     padding: 0.55em 0.9em;
     border-left: 4px solid @md-border;
     background-color: @md-quote-bg;
-    color: @md-muted;
+    color: @md-muted !important;
 }
 
 div.md-block hr {
