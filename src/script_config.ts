@@ -8,6 +8,7 @@ import {
 export type FenceStyle = "backtick" | "tilde";
 export type FenceMode = "md-only" | "any-fence";
 export type StyleMode = "dark" | "lite" | "";
+export type MdBlockInitialView = "expanded" | "collapsed";
 
 export type UserConfig = {
   version: 1;
@@ -20,6 +21,7 @@ export type UserConfig = {
   trimInput: boolean;
   sanitizeHtml: boolean;
   skipIfAlreadyWrapped: boolean;
+  initialMdBlockView: MdBlockInitialView;
   debug: boolean;
 };
 
@@ -36,6 +38,7 @@ const DEFAULT_CONFIG: UserConfig = {
   trimInput: true,
   sanitizeHtml: true,
   skipIfAlreadyWrapped: true,
+  initialMdBlockView: "expanded",
   debug: false,
 };
 
@@ -56,6 +59,8 @@ function normalizeConfig(raw: Partial<UserConfig> | undefined): UserConfig {
     candidate.allowedFenceStyles && candidate.allowedFenceStyles.length > 0
       ? candidate.allowedFenceStyles
       : DEFAULT_CONFIG.allowedFenceStyles;
+  const initialMdBlockView: MdBlockInitialView =
+    candidate.initialMdBlockView === "collapsed" ? "collapsed" : "expanded";
 
   return {
     ...DEFAULT_CONFIG,
@@ -65,6 +70,7 @@ function normalizeConfig(raw: Partial<UserConfig> | undefined): UserConfig {
     selector: candidate.selector?.trim() || DEFAULT_CONFIG.selector,
     wrapperClass: candidate.wrapperClass?.trim() || DEFAULT_CONFIG.wrapperClass,
     allowedFenceStyles,
+    initialMdBlockView,
   };
 }
 
@@ -175,6 +181,36 @@ function registerConfigMenu(): void {
     saveConfig({ trimInput: nextValue });
     alert(
       `Trim input is now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
+    );
+  });
+
+  gmRegisterMenuCommand("Toggle initial markdown view", () => {
+    const cfg = loadConfig();
+    const nextValue: MdBlockInitialView =
+      cfg.initialMdBlockView === "expanded" ? "collapsed" : "expanded";
+    saveConfig({ initialMdBlockView: nextValue });
+    alert(`Initial markdown view is now '${nextValue}'. Reload page to apply.`);
+  });
+
+  gmRegisterMenuCommand("Set initial markdown view", () => {
+    const cfg = loadConfig();
+    const value = prompt(
+      "Initial markdown view (expanded/collapsed):",
+      cfg.initialMdBlockView,
+    );
+    if (value === null) {
+      return;
+    }
+
+    const normalized = value.trim().toLowerCase();
+    if (normalized !== "expanded" && normalized !== "collapsed") {
+      alert("Invalid value. Use: expanded or collapsed.");
+      return;
+    }
+
+    saveConfig({ initialMdBlockView: normalized as MdBlockInitialView });
+    alert(
+      `Initial markdown view is now '${normalized}'. Reload page to apply.`,
     );
   });
 

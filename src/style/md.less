@@ -49,6 +49,37 @@ div.md-block {
 
 html[data-pinboard-style="dark"],
 html[data-pinboard-style="lite"] {
+    details.md-collapsible {
+        width: 100%;
+        margin: 0;
+    }
+
+    details.md-collapsible > summary.md-summary {
+        cursor: pointer;
+        user-select: none;
+        color: var(--md-link);
+        margin: 0 0 0.45em 0;
+        line-height: 1.35;
+        text-decoration: none;
+    }
+
+    details.md-collapsible > summary.md-summary:hover {
+        text-decoration: underline;
+    }
+
+    details.md-collapsible[open] > summary.md-summary {
+        margin-bottom: 0.6em;
+    }
+
+    a.exp-toggle {
+        color: var(--md-link);
+        text-decoration: none;
+    }
+
+    a.exp-toggle:hover {
+        text-decoration: underline;
+    }
+
     div.md-block {
         color: var(--md-text);
         background-color: var(--md-bg);

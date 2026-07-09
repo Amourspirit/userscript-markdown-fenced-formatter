@@ -2,6 +2,10 @@ import DOMPurify from "dompurify";
 import { marked } from "marked";
 import type { UserConfig } from "./script_config";
 
+const COLLAPSIBLE_CLASS = "md-collapsible";
+const SUMMARY_CLASS = "md-summary";
+const EXPAND_TOGGLE_CLASS = "exp-toggle";
+
 export interface FormatMarkdownStats {
   processed: number;
   converted: number;
@@ -66,6 +70,170 @@ function mdToHtml(markdown: string, cfg: UserConfig): string {
   return DOMPurify.sanitize(rendered);
 }
 
+function extractSummary(
+  text: string,
+  maxSentences = 3,
+  maxChars = 280,
+): string {
+  const cleaned = text.replace(/\s+/g, " ").trim();
+  if (!cleaned) {
+    return "View markdown details.";
+  }
+
+  const chunks = cleaned.match(/[^.!?]+[.!?]?/g) ?? [cleaned];
+  const selected: string[] = [];
+
+  for (const chunk of chunks) {
+    const sentence = chunk.trim();
+    if (!sentence) {
+      continue;
+    }
+
+    const candidate =
+      selected.length > 0 ? `${selected.join(" ")} ${sentence}` : sentence;
+    if (candidate.length > maxChars) {
+      break;
+    }
+
+    selected.push(sentence);
+    if (selected.length >= maxSentences) {
+      break;
+    }
+  }
+
+  let summary = selected.join(" ");
+
+  if (!summary) {
+    summary = cleaned.slice(0, maxChars).trimEnd();
+    const lastSpace = summary.lastIndexOf(" ");
+    if (lastSpace > 0 && cleaned.length > maxChars) {
+      summary = summary.slice(0, lastSpace);
+    }
+  }
+
+  if (summary.length < cleaned.length) {
+    const terminal = summary.slice(-1);
+    if (terminal !== "." && terminal !== "!" && terminal !== "?") {
+      summary = `${summary}...`;
+    }
+  }
+
+  return summary;
+}
+
+function extractSummarySource(container: HTMLElement): string {
+  const firstParagraph = container.querySelector<HTMLElement>(
+    "p, blockquote p, li, h1, h2, h3, h4, h5, h6",
+  );
+
+  const preferredText = firstParagraph?.textContent?.trim();
+  if (preferredText) {
+    return preferredText;
+  }
+
+  return container.textContent || "";
+}
+
+function buildCollapsibleBlock(
+  safeHtml: string,
+  cfg: UserConfig,
+): HTMLDetailsElement {
+  const textExtractor = document.createElement("div");
+  textExtractor.innerHTML = safeHtml;
+  const summaryText = extractSummary(extractSummarySource(textExtractor));
+
+  const details = document.createElement("details");
+  details.className = COLLAPSIBLE_CLASS;
+  details.open = cfg.initialMdBlockView === "expanded";
+
+  const summary = document.createElement("summary");
+  summary.className = SUMMARY_CLASS;
+  summary.textContent = summaryText;
+
+  const content = document.createElement("div");
+  content.className = cfg.wrapperClass;
+  content.innerHTML = safeHtml;
+
+  details.append(summary, content);
+  return details;
+}
+
+function getCollapsibleBlocks(): HTMLDetailsElement[] {
+  return Array.from(
+    document.querySelectorAll<HTMLDetailsElement>(
+      `details.${COLLAPSIBLE_CLASS}`,
+    ),
+  );
+}
+
+function findOrganizeAnchor(): HTMLAnchorElement | null {
+  const container = document.querySelector("table.edit_organize_widget td");
+  if (!container) {
+    return null;
+  }
+
+  const links = Array.from(
+    container.querySelectorAll<HTMLAnchorElement>("a.edit"),
+  );
+  return (
+    links.find(
+      (link) =>
+        link.id !== "bulk_edit" &&
+        (link.textContent || "").trim().toLowerCase() === "organize",
+    ) ??
+    links.find((link) => link.id !== "bulk_edit") ??
+    null
+  );
+}
+
+function injectExpandToggle(): void {
+  const organizeAnchor = findOrganizeAnchor();
+  if (!organizeAnchor) {
+    return;
+  }
+
+  let toggle = organizeAnchor.parentElement?.querySelector<HTMLAnchorElement>(
+    `a.${EXPAND_TOGGLE_CLASS}`,
+  );
+
+  if (!toggle) {
+    const separator = document.createTextNode(" ‧ ");
+    toggle = document.createElement("a");
+    toggle.className = EXPAND_TOGGLE_CLASS;
+    toggle.href = "";
+    organizeAnchor.after(separator, toggle);
+  } else {
+    // Replace existing element to reset any previous event handlers.
+    const freshToggle = toggle.cloneNode(true) as HTMLAnchorElement;
+    toggle.replaceWith(freshToggle);
+    toggle = freshToggle;
+  }
+
+  const updateToggleLabel = () => {
+    const sections = getCollapsibleBlocks();
+    const allOpen =
+      sections.length > 0 && sections.every((details) => details.open);
+    toggle.textContent = allOpen ? "Collapse All" : "Expand All";
+  };
+
+  toggle.addEventListener("click", (event) => {
+    event.preventDefault();
+    const sections = getCollapsibleBlocks();
+    if (sections.length === 0) {
+      return;
+    }
+
+    const allOpen = sections.every((details) => details.open);
+    sections.forEach((details) => {
+      details.open = !allOpen;
+    });
+
+    updateToggleLabel();
+  });
+
+  updateToggleLabel();
+}
+
 export function formatMarkdown(cfg: UserConfig): FormatMarkdownStats {
   const descriptions = document.querySelectorAll<HTMLDivElement>(cfg.selector);
 
@@ -78,7 +246,9 @@ export function formatMarkdown(cfg: UserConfig): FormatMarkdownStats {
   descriptions.forEach((el) => {
     if (
       cfg.skipIfAlreadyWrapped &&
-      el.querySelector(`:scope > div.${cfg.wrapperClass}`)
+      el.querySelector(
+        `:scope > details.${COLLAPSIBLE_CLASS}, :scope > div.${cfg.wrapperClass}`,
+      )
     ) {
       stats.skipped += 1;
       return;
@@ -93,9 +263,12 @@ export function formatMarkdown(cfg: UserConfig): FormatMarkdownStats {
     }
 
     const safeHtml = mdToHtml(markdown, cfg);
-    el.innerHTML = `<div class="${cfg.wrapperClass}">${safeHtml}</div>`;
+    const collapsible = buildCollapsibleBlock(safeHtml, cfg);
+    el.replaceChildren(collapsible);
     stats.converted += 1;
   });
+
+  injectExpandToggle();
 
   return stats;
 }
