@@ -58,7 +58,8 @@ export function formatMarkdown(): FormatMarkdownStats {
       return;
     }
 
-    el.innerHTML = mdToSafeHtml(markdown);
+    const safeHtml = mdToSafeHtml(markdown);
+    el.innerHTML = `<div class="md-block">${safeHtml}</div>`;
     stats.converted += 1;
   });
 

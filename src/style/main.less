@@ -1,6 +1,150 @@
-@background_color: yellow;
+@md-bg: #f8f7ee;
+@md-border: #d6d2bf;
+@md-text: #1f1f1f;
+@md-muted: #555;
+@md-code-bg: #f1efdf;
+@md-quote-bg: #f5f3e8;
+@md-link: #0645ad;
+@md-link-visited: #5a3696;
 
-body {
-    background-color: @background_color;
-    z-index: 20;
+div.md-block {
+    color: @md-text;
+    background-color: @md-bg;
+    border: 1px solid @md-border;
+    border-radius: 6px;
+    padding: 12px 14px;
+    line-height: 1.55;
+    font-size: 14px;
+    overflow-wrap: anywhere;
 }
+
+div.md-block > *:first-child {
+    margin-top: 0;
+}
+
+div.md-block > *:last-child {
+    margin-bottom: 0;
+}
+
+div.md-block h1,
+div.md-block h2,
+div.md-block h3,
+div.md-block h4,
+div.md-block h5,
+div.md-block h6 {
+    margin: 1em 0 0.45em;
+    line-height: 1.25;
+    font-weight: 700;
+}
+
+div.md-block h1 {
+    font-size: 1.65em;
+    border-bottom: 1px solid @md-border;
+    padding-bottom: 0.2em;
+}
+
+div.md-block h2 {
+    font-size: 1.35em;
+    border-bottom: 1px solid @md-border;
+    padding-bottom: 0.15em;
+}
+
+div.md-block h3 {
+    font-size: 1.15em;
+}
+
+div.md-block p {
+    margin: 0.75em 0;
+}
+
+div.md-block a {
+    color: @md-link;
+    text-decoration: underline;
+}
+
+div.md-block a:visited {
+    color: @md-link-visited;
+}
+
+div.md-block strong {
+    font-weight: 700;
+}
+
+div.md-block em {
+    font-style: italic;
+}
+
+div.md-block ul,
+div.md-block ol {
+    margin: 0.75em 0;
+    padding-left: 1.6em;
+}
+
+div.md-block li {
+    margin: 0.22em 0;
+}
+
+div.md-block blockquote {
+    margin: 0.9em 0;
+    padding: 0.55em 0.9em;
+    border-left: 4px solid @md-border;
+    background-color: @md-quote-bg;
+    color: @md-muted;
+}
+
+div.md-block hr {
+    border: 0;
+    border-top: 1px solid @md-border;
+    margin: 1em 0;
+}
+
+div.md-block code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 0.92em;
+    background-color: @md-code-bg;
+    border: 1px solid @md-border;
+    border-radius: 4px;
+    padding: 0.08em 0.32em;
+}
+
+div.md-block pre {
+    margin: 0.9em 0;
+    padding: 0.75em 0.85em;
+    overflow-x: auto;
+    background-color: @md-code-bg;
+    border: 1px solid @md-border;
+    border-radius: 4px;
+}
+
+div.md-block pre code {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    display: block;
+    line-height: 1.45;
+}
+
+div.md-block table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.95em 0;
+}
+
+div.md-block th,
+div.md-block td {
+    border: 1px solid @md-border;
+    padding: 0.42em 0.58em;
+    text-align: left;
+    vertical-align: top;
+}
+
+div.md-block thead th {
+    background-color: @md-code-bg;
+}
+
+div.md-block img {
+    max-width: 100%;
+    height: auto;
+}
+
