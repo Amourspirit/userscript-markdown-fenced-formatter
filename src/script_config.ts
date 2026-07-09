@@ -99,6 +99,42 @@ function registerConfigMenu(): void {
     alert(`Fence mode is now: ${nextMode}. Reload page to apply.`);
   });
 
+  gmRegisterMenuCommand("Toggle HTML sanitization", () => {
+    const cfg = loadConfig();
+    const nextValue = !cfg.sanitizeHtml;
+    saveConfig({ sanitizeHtml: nextValue });
+    alert(
+      `HTML sanitization is now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
+    );
+  });
+
+  gmRegisterMenuCommand("Toggle skip already wrapped", () => {
+    const cfg = loadConfig();
+    const nextValue = !cfg.skipIfAlreadyWrapped;
+    saveConfig({ skipIfAlreadyWrapped: nextValue });
+    alert(
+      `Skip already wrapped is now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
+    );
+  });
+
+  gmRegisterMenuCommand("Toggle BR-to-newline conversion", () => {
+    const cfg = loadConfig();
+    const nextValue = !cfg.convertBrToNewline;
+    saveConfig({ convertBrToNewline: nextValue });
+    alert(
+      `BR-to-newline conversion is now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
+    );
+  });
+
+  gmRegisterMenuCommand("Toggle trim input", () => {
+    const cfg = loadConfig();
+    const nextValue = !cfg.trimInput;
+    saveConfig({ trimInput: nextValue });
+    alert(
+      `Trim input is now ${nextValue ? "enabled" : "disabled"}. Reload page to apply.`,
+    );
+  });
+
   gmRegisterMenuCommand("Toggle debug logs", () => {
     const cfg = loadConfig();
     saveConfig({ debug: !cfg.debug });
