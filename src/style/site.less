@@ -1,26 +1,70 @@
+@color00: #2e3440;
+@color01: #3b4252;
+@color02: #434c5e;
+@color03: #4c566a;
+@color04: #d8dee9;
+@color05: #e5e9f0;
+@color06: #eceff4;
+@color07: #8fbcbb;
+@color08: #88c0d0;
+@color09: #81a1c1;
+@color10: #5e81ac;
+@color11: #bf616a;
+@color12: #d08770;
+@color13: #ebcb8b;
+@color14: #a3be8c;
+@color15: #b48ead;
+
+html[data-pinboard-style="lite"] {
+    * {
+        /* font-family: Avenir Next, Helvetica Neue, Arial, Sans; */
+        font-family: Inconsolata, Hasklig, "M + 2m", Sans;
+        font-family: "Fira Sans", Sans;
+
+        --nord00:@color00;
+        --nord01:@color01;
+        --nord02:@color02;
+        --nord03:@color03;
+        --nord04:@color04;
+        --nord05:@color05;
+        --nord06:@color06;
+        --nord07:@color07;
+        --nord08:@color08;
+        --nord09:@color09;
+        --nord10:@color10;
+        --nord11:@color11;
+        --nord12:@color12;
+        --nord13:@color13;
+        --nord14:@color14;
+        --nord15:@color15;
+    }
+}
 html[data-pinboard-style="dark"] {
     * {
         /* font-family: Avenir Next, Helvetica Neue, Arial, Sans; */
         font-family: Inconsolata, Hasklig, "M + 2m", Sans;
         font-family: "Fira Sans", Sans;
 
-        --nord00: #2e3440;
-        --nord01: #3b4252;
-        --nord02: #434c5e;
-        --nord03: #4c566a;
-        --nord04: #d8dee9;
-        --nord05: #e5e9f0;
-        --nord06: #eceff4;
-        --nord07: #8fbcbb;
-        --nord08: #88c0d0;
-        --nord09: #81a1c1;
-        --nord10: #5e81ac;
-        --nord11: #bf616a;
-        --nord12: #d08770;
-        --nord13: #ebcb8b;
-        --nord14: #a3be8c;
-        --nord15: #b48ead;
+        --nord00:rgb((255 - red(@color00)),(255 - green(@color00)),(255 - blue(@color00)));
+        --nord01:rgb((255 - red(@color01)),(255 - green(@color01)),(255 - blue(@color01)));
+        --nord02:rgb((255 - red(@color02)),(255 - green(@color02)),(255 - blue(@color02)));
+        --nord03:rgb((255 - red(@color03)),(255 - green(@color03)),(255 - blue(@color03)));
+        --nord04:rgb((255 - red(@color04)),(255 - green(@color04)),(255 - blue(@color04)));
+        --nord05:rgb((255 - red(@color05)),(255 - green(@color05)),(255 - blue(@color05)));
+        --nord06:rgb((255 - red(@color06)),(255 - green(@color06)),(255 - blue(@color06)));
+        --nord07:rgb((255 - red(@color07)),(255 - green(@color07)),(255 - blue(@color07)));
+        --nord08:rgb((255 - red(@color08)),(255 - green(@color08)),(255 - blue(@color08)));
+        --nord09:rgb((255 - red(@color09)),(255 - green(@color09)),(255 - blue(@color09)));
+        --nord10:rgb((255 - red(@color10)),(255 - green(@color10)),(255 - blue(@color10)));
+        --nord11:rgb((255 - red(@color11)),(255 - green(@color11)),(255 - blue(@color11)));
+        --nord12:rgb((255 - red(@color12)),(255 - green(@color12)),(255 - blue(@color12)));
+        --nord13:rgb((255 - red(@color13)),(255 - green(@color13)),(255 - blue(@color13)));
+        --nord14:rgb((255 - red(@color14)),(255 - green(@color14)),(255 - blue(@color14)));
+        --nord15:rgb((255 - red(@color15)),(255 - green(@color15)),(255 - blue(@color15)));
     }
+}
+html[data-pinboard-style="dark"],
+html[data-pinboard-style="lite"] {
 
     div#logo {
         // font-size: 18px !important;
