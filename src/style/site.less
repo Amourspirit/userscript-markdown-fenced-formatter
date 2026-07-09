@@ -27,77 +27,187 @@
 @color-bm-bg: #a5aab4;
 @color-bm-bdr: #6f7787;
 
-
-
 html[data-pinboard-style="dark"] {
     font-family: Inconsolata, Hasklig, "M + 2m", Sans;
     font-family: "Fira Sans", Sans;
 
-    --nord00:@color00;
-    --nord01:@color01;
-    --nord02:@color02;
-    --nord03:@color03;
-    --nord04:@color04;
-    --nord05:@color05;
-    --nord06:@color06;
-    --nord07:@color07;
-    --nord08:@color08;
-    --nord09:@color09;
-    --nord10:@color10;
-    --nord11:@color11;
-    --nord12:@color12;
-    --nord13:@color13;
-    --nord14:@color14;
-    --nord15:@color15;
-    --nord16:@color16;
-    --nord17:@color17;
-    --nord18:@color18;
-    --nord19:@color19;
-    --nord20:@color20;
-    --color-link-a:@color-link-a;
-    --color-login-a:@color-login-a;
-    --color-edit:@color-edit;
-    --color-delete:@color-delete;
-    --color-search-button:@color-search-button;
-    --color-bm-bg:@color-bm-bg;
-    --color-bm-bdr:@color-bm-bdr;
+    --nord00: @color00;
+    --nord01: @color01;
+    --nord02: @color02;
+    --nord03: @color03;
+    --nord04: @color04;
+    --nord05: @color05;
+    --nord06: @color06;
+    --nord07: @color07;
+    --nord08: @color08;
+    --nord09: @color09;
+    --nord10: @color10;
+    --nord11: @color11;
+    --nord12: @color12;
+    --nord13: @color13;
+    --nord14: @color14;
+    --nord15: @color15;
+    --nord16: @color16;
+    --nord17: @color17;
+    --nord18: @color18;
+    --nord19: @color19;
+    --nord20: @color20;
+    --color-link-a: @color-link-a;
+    --color-login-a: @color-login-a;
+    --color-edit: @color-edit;
+    --color-delete: @color-delete;
+    --color-search-button: @color-search-button;
+    --color-bm-bg: @color-bm-bg;
+    --color-bm-bdr: @color-bm-bdr;
 }
 html[data-pinboard-style="lite"] {
     font-family: Inconsolata, Hasklig, "M + 2m", Sans;
     font-family: "Fira Sans", Sans;
 
-    --nord00:rgb((255 - red(@color00)),(255 - green(@color00)),(255 - blue(@color00)));
-    --nord01:rgb((255 - red(@color01)),(255 - green(@color01)),(255 - blue(@color01)));
-    --nord02:rgb((255 - red(@color02)),(255 - green(@color02)),(255 - blue(@color02)));
-    --nord03:rgb((255 - red(@color03)),(255 - green(@color03)),(255 - blue(@color03)));
-    --nord04:rgb((255 - red(@color04)),(255 - green(@color04)),(255 - blue(@color04)));
-    --nord05:rgb((255 - red(@color05)),(255 - green(@color05)),(255 - blue(@color05)));
-    --nord06:rgb((255 - red(@color06)),(255 - green(@color06)),(255 - blue(@color06)));
-    --nord07:rgb((255 - red(@color07)),(255 - green(@color07)),(255 - blue(@color07)));
-    --nord08:rgb((255 - red(@color08)),(255 - green(@color08)),(255 - blue(@color08)));
-    --nord09:rgb((255 - red(@color09)),(255 - green(@color09)),(255 - blue(@color09)));
-    --nord10:rgb((255 - red(@color10)),(255 - green(@color10)),(255 - blue(@color10)));
-    --nord11:rgb((255 - red(@color11)),(255 - green(@color11)),(255 - blue(@color11)));
-    --nord12:rgb((255 - red(@color12)),(255 - green(@color12)),(255 - blue(@color12)));
-    --nord13:rgb((255 - red(@color13)),(255 - green(@color13)),(255 - blue(@color13)));
-    --nord14:rgb((255 - red(@color14)),(255 - green(@color14)),(255 - blue(@color14)));
-    --nord15:rgb((255 - red(@color15)),(255 - green(@color15)),(255 - blue(@color15)));
-    --nord16:rgb((255 - red(@color16)),(255 - green(@color16)),(255 - blue(@color16)));
-    --nord17:rgba((255 - red(@color17)),(255 - green(@color17)),(255 - blue(@color17)), alpha(@color17));
-    --nord18:rgb((255 - red(@color18)),(255 - green(@color18)),(255 - blue(@color18)));
-    --nord19:rgb((255 - red(@color19)),(255 - green(@color19)),(255 - blue(@color19)));
-    --nord20:rgb((255 - red(@color20)),(255 - green(@color20)),(255 - blue(@color20)));
-    --color-link-a:rgb((255 - red(@color-link-a)),(255 - green(@color-link-a)),(255 - blue(@color-link-a)));
-    --color-login-a:rgb((255 - red(@color-login-a)),(255 - green(@color-login-a)),(255 - blue(@color-login-a)));
-    --color-edit:rgb((255 - red(@color-edit)),(255 - green(@color-edit)),(255 - blue(@color-edit)));
-    --color-delete:rgb((255 - red(@color-delete)),(255 - green(@color-delete)),(255 - blue(@color-delete)));
-    --color-search-button:rgb((255 - red(@color-search-button)),(255 - green(@color-search-button)),(255 - blue(@color-search-button)));
-    --color-bm-bg:rgb((255 - red(@color-bm-bg)),(255 - green(@color-bm-bg)),(255 - blue(@color-bm-bg)));
-    --color-bm-bdr:rgb((255 - red(@color-bm-bdr)),(255 - green(@color-bm-bdr)),(255 - blue(@color-bm-bdr)));
+    --nord00: rgb(
+        (255 - red(@color00)),
+        (255 - green(@color00)),
+        (255 - blue(@color00))
+    );
+    --nord01: rgb(
+        (255 - red(@color01)),
+        (255 - green(@color01)),
+        (255 - blue(@color01))
+    );
+    --nord02: rgb(
+        (255 - red(@color02)),
+        (255 - green(@color02)),
+        (255 - blue(@color02))
+    );
+    --nord03: rgb(
+        (255 - red(@color03)),
+        (255 - green(@color03)),
+        (255 - blue(@color03))
+    );
+    --nord04: rgb(
+        (255 - red(@color04)),
+        (255 - green(@color04)),
+        (255 - blue(@color04))
+    );
+    --nord05: rgb(
+        (255 - red(@color05)),
+        (255 - green(@color05)),
+        (255 - blue(@color05))
+    );
+    --nord06: rgb(
+        (255 - red(@color06)),
+        (255 - green(@color06)),
+        (255 - blue(@color06))
+    );
+    --nord07: rgb(
+        (255 - red(@color07)),
+        (255 - green(@color07)),
+        (255 - blue(@color07))
+    );
+    --nord08: rgb(
+        (255 - red(@color08)),
+        (255 - green(@color08)),
+        (255 - blue(@color08))
+    );
+    --nord09: rgb(
+        (255 - red(@color09)),
+        (255 - green(@color09)),
+        (255 - blue(@color09))
+    );
+    --nord10: rgb(
+        (255 - red(@color10)),
+        (255 - green(@color10)),
+        (255 - blue(@color10))
+    );
+    --nord11: rgb(
+        (255 - red(@color11)),
+        (255 - green(@color11)),
+        (255 - blue(@color11))
+    );
+    --nord12: rgb(
+        (255 - red(@color12)),
+        (255 - green(@color12)),
+        (255 - blue(@color12))
+    );
+    --nord13: rgb(
+        (255 - red(@color13)),
+        (255 - green(@color13)),
+        (255 - blue(@color13))
+    );
+    --nord14: rgb(
+        (255 - red(@color14)),
+        (255 - green(@color14)),
+        (255 - blue(@color14))
+    );
+    --nord15: rgb(
+        (255 - red(@color15)),
+        (255 - green(@color15)),
+        (255 - blue(@color15))
+    );
+    --nord16: rgb(
+        (255 - red(@color16)),
+        (255 - green(@color16)),
+        (255 - blue(@color16))
+    );
+    --nord17: rgba(
+        (255 - red(@color17)),
+        (255 - green(@color17)),
+        (255 - blue(@color17)),
+        alpha(@color17)
+    );
+    --nord18: rgb(
+        (255 - red(@color18)),
+        (255 - green(@color18)),
+        (255 - blue(@color18))
+    );
+    --nord19: rgb(
+        (255 - red(@color19)),
+        (255 - green(@color19)),
+        (255 - blue(@color19))
+    );
+    --nord20: rgb(
+        (255 - red(@color20)),
+        (255 - green(@color20)),
+        (255 - blue(@color20))
+    );
+    --color-link-a: rgb(
+        (255 - red(@color-link-a)),
+        (255 - green(@color-link-a)),
+        (255 - blue(@color-link-a))
+    );
+    --color-login-a: rgb(
+        (255 - red(@color-login-a)),
+        (255 - green(@color-login-a)),
+        (255 - blue(@color-login-a))
+    );
+    --color-edit: rgb(
+        (255 - red(@color-edit)),
+        (255 - green(@color-edit)),
+        (255 - blue(@color-edit))
+    );
+    --color-delete: rgb(
+        (255 - red(@color-delete)),
+        (255 - green(@color-delete)),
+        (255 - blue(@color-delete))
+    );
+    --color-search-button: rgb(
+        (255 - red(@color-search-button)),
+        (255 - green(@color-search-button)),
+        (255 - blue(@color-search-button))
+    );
+    --color-bm-bg: rgb(
+        (255 - red(@color-bm-bg)),
+        (255 - green(@color-bm-bg)),
+        (255 - blue(@color-bm-bg))
+    );
+    --color-bm-bdr: rgb(
+        (255 - red(@color-bm-bdr)),
+        (255 - green(@color-bm-bdr)),
+        (255 - blue(@color-bm-bdr))
+    );
 }
 html[data-pinboard-style="dark"],
 html[data-pinboard-style="lite"] {
-
     div#logo {
         // font-size: 18px;
         font-size: 18px;
@@ -127,11 +237,6 @@ html[data-pinboard-style="lite"] {
 
     #banner {
         background: transparent;
-    }
-
-    .bookmark_title {
-        font-size: 1.6em;
-        color: var(--color-link-a);
     }
 
     div.display a {
@@ -212,8 +317,8 @@ html[data-pinboard-style="lite"] {
     }
 
     .bookmark_title {
-        font-size: 1.6em;
-        color: var(--nord09);
+        font-size: 1.1em;
+        color: var(--color-link-a);
     }
 
     a.banner_username,
@@ -435,5 +540,37 @@ td, */
     input[type="reset"] {
         background-color: var(--nord08);
         color: var(--nord05);
+    }
+    .settings_heading {
+        background-color: var(--nord02);
+    }
+
+    #profile_main_column {
+        background-color: var(--nord01);
+        display: grid;
+        grid-auto-flow: column;
+        align-content: space-between;
+        justify-content: space-between;
+        align-items: stretch;
+        justify-items: start;
+    }
+    #profile_right_column,
+    #profile_left_column {
+        width: 350px;
+        border: 1px solid var(--color-bm-bdr);
+        padding: 0.2em;
+    }
+    div.display a.copy_link,
+    div.display > a.bookmark_count {
+        font-family: helvetica, sans-serif;
+        word-wrap: break-word;
+    }
+    div.display a.copy_link {
+        color: var(--color-link-a);
+        font-size: 0.7em;
+    }
+    div.display > a.bookmark_count {
+        color: var(--nord07);
+        font-size: 0.9em;
     }
 }
