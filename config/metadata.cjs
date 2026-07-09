@@ -32,5 +32,5 @@ module.exports = {
     "GM_deleteValue",
   ],
   connect: ["httpbin.org"],
-  "run-at": "document-end",
+  "run-at": "document-start",
 };
